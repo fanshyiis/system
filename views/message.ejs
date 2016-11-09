@@ -1,0 +1,194 @@
+ <%- include header %>
+
+    <% if(locals.islogin){%>
+<body class="page-body">
+
+</div>
+ <script type="text/javascript">  
+
+        function Message(){
+         var name = document.getElementById("name").value;
+         var contect = document.getElementById("contect").value;
+         var message = document.getElementById("message").value;
+         username = '<%= user %>';
+         if (name==''||contect==''||message=='') {
+            alert("请完善信息");
+             return;
+
+          }
+        
+            var messagedata={
+             'name':name,
+             'contect':contect,
+             'message':message,
+             'username':username,
+             }
+  //alert(messagedata);
+              $.ajax({
+             url: '/message',
+             type: 'post',
+             dataType: 'json',
+             async : false,
+             data:messagedata,
+              success:function(data){
+             window.open('/home','_self')
+                        },
+             error:function(data){
+             alert('留言成功');
+             //document.getElementById("messageinfo").style.display=none;  
+             window.open('/home','_self')
+             }
+             
+            });
+
+          }
+
+       
+        
+           
+           
+            
+</script>  
+
+    <div class="settings-pane">
+            
+        <a  data-toggle="settings-pane" data-animate="true">
+            &times;
+        </a>
+        
+        
+        
+    </div>
+    
+    <div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
+            
+        <!-- Add "fixed" class to make the sidebar fixed always to the browser viewport. -->
+        <!-- Adding class "toggle-others" will keep only one menu item open at a time. -->
+        <!-- Adding class "collapsed" collapse sidebar root elements and show only icons. -->
+        
+        
+        <div class="main-content">
+                    
+          <nav class="navbar user-info-navbar" role="navigation" style="height:50px">
+                
+                <!-- Left links for user info navbar -->
+                <ul class="user-info-menu  left-links list-inline list-unstyled">
+
+                 <li class="dropdown user-profile" style="min-height: 76px;">
+                        <a href="/logout"  >
+                           
+                            <span>
+                                
+                                <i class="fa-power-off" style="padding-right: 10px;"></i>退出系统
+                            </span>
+                        </a>
+                        
+                       
+                    </li>
+                    
+                    
+                </ul>
+                            <ul class="user-info-menu  left-links list-inline list-unstyled">
+
+                 <li class="dropdown user-profile" style="min-height: 76px;">
+                        <a href="/home"  >
+                           
+                            <span>
+                                
+                                <i class="fa-mail-reply" style="padding-right: 10px;"></i>返回主页
+                            </span>
+                        </a>
+                        
+                       
+                    </li>
+                    
+                    
+                </ul>
+              
+
+
+                <ul class="user-info-menu  left-links list-inline list-unstyled">
+
+                 <li class="dropdown user-profile" style="min-height: 76px;">
+                        <a href="#" data-toggle="dropdown">
+                            <img src="assets/images/user-4.png" alt="user-image" class="img-circle img-inline userpic-32" width="18">
+                            <span>
+                                <%= user %>
+                                
+                            </span>
+                        </a>
+                        
+                       
+                    </li>
+                    
+                </ul>
+                
+                
+             
+                
+            </nav>
+            <div class="row">
+                <div class="col-sm-6" style="margin-left: 25%;">
+                    
+                    <div class="panel panel-default" style="padding: 50px">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">留言反馈</h3>
+                           
+                        </div>
+                        <div class="panel-body" id="messageinfo" style="display: block;">
+                            
+                            <form role="form"  class="form-horizontal">
+                           
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="field-1">您的姓名</label>
+                                    
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="name" required>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group-separator"></div>
+                                
+                                 <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="field-1">联系方式</label>
+                                    
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="contect"required >
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group-separator"></div>
+                                
+                                
+                               
+                                
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="field-5">留言内容</label>
+                                    
+                                    <div class="col-sm-10">
+                                        <textarea class="form-control autogrow" cols="5" id="message" placeholder="我想说点什么...." style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 50px;"required></textarea>
+                                    </div>
+                                </div>
+                               <div class="form-group-separator"></div> 
+                            <button class="btn btn-turquoise"  onclick="Message();" style="float: right;">提交留言</button>
+                                
+                                
+                            </form>
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            
+
+            
+ 
+    </body>
+ <% }else{%>
+ <script type="text/javascript">
+    window.open("/login",'_self');
+ </script>
+ <%}%>
+
+ <%- include footer %>

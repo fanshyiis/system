@@ -1,0 +1,397 @@
+
+<% include header %>
+<% if(locals.islogin){%>
+  <body class="page-body">
+  <script type="text/javascript">
+  	function ToSys(data){
+          var systype = data;
+          window.open("/sys?"+systype,'_self');
+      }
+    function SpSys(data){
+        var ip = data;
+        
+        
+        var power='<%= power %>';
+      		if (power!='2') {
+      			alert("暂未开放");
+
+      		}else{
+                window.open('/sys?'+ip,'_self');
+            }
+        // window.open('/sys?'+ip,'_self');
+          //var systype = data;
+          //window.open("/sys?"+systype);
+      }
+          //alert(systype);}
+  </script>
+        <div class="page-container">
+            <div class="sidebar-menu toggle-others fixed " style="width: 240px!important;">
+                <div class="sidebar-menu-inner">
+                    <header class="logo-env">
+                        <!-- logo -->
+                        <div class="logo">
+                            <a  class="logo-expanded">
+                                <img src="assets/images/logo@2x.png" width="150" alt="" />
+                                <p  style="font-size: 10px; padding-top:10px;">Powered By SSD&AI Development Team</p>
+                            </a>
+                        </div>
+                        <div style="color:#fff;">
+                            <div class="xe-widget xe-counter xe-counter-purple" style="background:#2c2e2f;">
+                               
+                                <div class="xe-label" style="padding-left: 0px;padding-top: 18px;padding-bottom: 18px;
+                                ">
+                                    <strong class="num"  style="font-size: 20px; color:#fff"><%= user %></strong>
+                                    <span>您好,欢迎登陆</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- This will toggle the mobile menu and will be visible only on mobile devices -->
+                        <div class="mobile-menu-toggle visible-xs">
+                            <a href="#" data-toggle="user-info-menu">
+                                <i class="fa-bell-o"></i>
+                                <span class="badge badge-success">7</span>
+                            </a>
+                            <a href="#" data-toggle="mobile-menu">
+                                <i class="fa-bars"></i>
+                            </a>
+                        </div>
+                    </header>
+                    <ul id="main-menu" class="main-menu">
+                        <!-- add class "multiple-expanded" to allow multiple submenus to open -->
+                        <!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
+                        <li>
+                            <a href="javascript:void(0);" >
+                                <i class="linecons-desktop"></i>
+                                <span class="title">系统选择</span>
+                            </a>
+                            
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" onclick="OpenMessage();">
+                                <i class="linecons-mail"></i>
+                                <span class="title">留言反馈</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/logout">
+                                <i class="linecons-paper-plane"></i>
+                                <span class="title">退出系统</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="main-content">
+                <div class="row" style="background-color:#fff;">
+                    <div class="col-xs-3">
+                        <div class="xe-widget xe-counter" data-count=".num" >
+                            <div class="xe-icon">
+                                <i class="fa-windows"></i>
+                            </div>
+                            <div class="xe-label">
+                                <strong class="num">X86</strong>
+                                <span>32位操作系统</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="background-color:#fff;">   
+                   <a href="javascript:void(0);" onclick="ToSys('32xp');">
+                    <div class="col-xs-3" >
+                        <div class="xe-widget xe-progress-counter xe-counter-block" >
+                        <div class="xe-background">
+                                <i class="fa-windows"></i>
+                            </div>
+                            <div class="xe-upper">
+                                <div class="xe-icon">
+                                    <i class="fa-windows"></i>
+                                </div>
+                                <div class="xe-label">
+                                    <strong class="num">Windows XP</strong>
+                                    
+                                </div>
+                            </div>
+                            <div class="xe-lower">
+                                <div class="border"></div>
+                                <span>32位操作系统</span>
+                                                           </div>
+                        </div>
+                    </div>
+                    </a>
+                    <a href="javascript:void(0);" onclick="ToSys('32win7');">
+                    <div class="col-xs-3" >
+                        <div class="xe-widget xe-progress-counter xe-counter-block-purple" >
+                        <div class="xe-background">
+                                <i class="linecons-camera"></i>
+                            </div>
+                            <div class="xe-upper">
+                                <div class="xe-icon">
+                                    <i class="fa-windows"></i>
+                                </div>
+                                <div class="xe-label">
+                                    <strong class="num">Windows 7</strong>
+                                    
+                                </div>
+                            </div>
+                            <div class="xe-lower">
+                                <div class="border"></div>
+                                <span>32位操作系统</span>
+                               
+                            </div>
+                        </div>
+                    </div>
+                    </a>
+                    <a href="javascript:void(0);" onclick="ToSys('32win8');">
+                    <div class="col-xs-3" >
+                        <div class="xe-widget xe-progress-counter xe-counter-block-blue" >
+                         <div class="xe-background">
+                                <i class="linecons-user"></i>
+                            </div>
+                            <div class="xe-upper">
+                                <div class="xe-icon">
+                                    <i class="fa-windows"></i>
+                                </div>
+                                <div class="xe-label">
+                                    <strong class="num">Windows 8</strong>
+                                   
+                                </div>
+                            </div>
+                            <div class="xe-lower">
+                                <div class="border"></div>
+                                <span>32位操作系统</span>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    </a>
+                    <a href="javascript:void(0);" onclick="ToSys('32win8.1');">
+                    <div class="col-xs-3">
+                        <div class="xe-widget xe-progress-counter xe-counter-block-orange">
+                        <div class="xe-background">
+                                <i class="linecons-heart"></i>
+                            </div>
+                            <div class="xe-upper">
+                                <div class="xe-icon">
+                                    <i class="fa-windows"></i>
+                                </div>
+                                <div class="xe-label">
+                                    <strong class="num">Windows 8.1</strong>
+                                    
+                                </div>
+                            </div>
+                            <div class="xe-lower">
+                                <div class="border"></div>
+                                <span>32位操作系统</span>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    </a>
+                    <a href="javascript:void(0);" onclick="ToSys('32win10');">
+                    <div class="col-xs-3">
+                        <div class="xe-widget xe-progress-counter xe-counter-block-pink">
+                        <div class="xe-background">
+                                <i class="fa-life-ring"></i>
+                            </div>
+                            <div class="xe-upper">
+                                <div class="xe-icon">
+                                    <i class="fa-windows"></i>
+                                </div>
+                                <div class="xe-label">
+                                    <strong class="num">Windows 10</strong>
+                                    
+                                </div>
+                            </div>
+                            <div class="xe-lower">
+                                <div class="border"></div>
+                                <span>32位操作系统</span>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    </a>
+                   
+                </div>
+                <div class="row" style="background-color:#fff;margin-top:30px;">
+                    
+                    <div class="col-xs-3">
+                        <div class="xe-widget xe-counter xe-counter-info" >
+                            <div class="xe-icon">
+                                <i class="fa-windows"></i>
+                            </div>
+                            <div class="xe-label">
+                                <strong class="num">X64</strong>
+                                <span>64位操作系统</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="background-color:#fff;">   
+                <a href="javascript:void(0);"onclick="ToSys('64xp');">
+                   
+                    <div class="col-xs-3" >
+                        <div class="xe-widget xe-progress-counter xe-counter-block" >
+                        <div class="xe-background">
+                                <i class="fa-windows"></i>
+                            </div>
+                            <div class="xe-upper">
+                                <div class="xe-icon">
+                                    <i class="fa-windows"></i>
+                                </div>
+                                <div class="xe-label">
+                                    <strong class="num">Windows XP</strong>
+                                    
+                                </div>
+                            </div>
+                            <div class="xe-lower">
+                                <div class="border"></div>
+                                <span>64位操作系统</span>
+                                                           </div>
+                        </div>
+                    </div>
+                    </a>
+                    <a href="javascript:void(0);"onclick="ToSys('64win7');">
+                    <div class="col-xs-3" >
+                        <div class="xe-widget xe-progress-counter xe-counter-block-purple" >
+                        <div class="xe-background">
+                                <i class="linecons-camera"></i>
+                            </div>
+                            <div class="xe-upper">
+                                <div class="xe-icon">
+                                    <i class="fa-windows"></i>
+                                </div>
+                                <div class="xe-label">
+                                    <strong class="num">Windows 7</strong>
+                                    
+                                </div>
+                            </div>
+                            <div class="xe-lower">
+                                <div class="border"></div>
+                                <span>64位操作系统</span>
+                               
+                            </div>
+                        </div>
+                    </div>
+                    </a>
+                    <a href="javascript:void(0);"onclick="ToSys('64win8');">
+                    <div class="col-xs-3">
+                        <div class="xe-widget xe-progress-counter xe-counter-block-blue" >
+                         <div class="xe-background">
+                                <i class="linecons-user"></i>
+                            </div>
+                            <div class="xe-upper">
+                                <div class="xe-icon">
+                                    <i class="fa-windows"></i>
+                                </div>
+                                <div class="xe-label">
+                                    <strong class="num">Windows 8</strong>
+                                   
+                                </div>
+                            </div>
+                            <div class="xe-lower">
+                                <div class="border"></div>
+                                <span>64位操作系统</span>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    </a>
+                    <a href="javascript:void(0);"onclick="ToSys('64win8.1');">
+                    <div class="col-xs-3" >
+                        <div class="xe-widget xe-progress-counter xe-counter-block-orange">
+                        <div class="xe-background">
+                                <i class="linecons-heart"></i>
+                            </div>
+                            <div class="xe-upper">
+                                <div class="xe-icon">
+                                    <i class="fa-windows"></i>
+                                </div>
+                                <div class="xe-label">
+                                    <strong class="num">Windows 8.1</strong>
+                                    
+                                </div>
+                            </div>
+                            <div class="xe-lower">
+                                <div class="border"></div>
+                                <span>64位操作系统</span>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    </a>
+                    <a href="javascript:void(0);" onclick="ToSys('64win10');">
+                    <div class="col-xs-3">
+                        <div class="xe-widget xe-progress-counter xe-counter-block-pink">
+                        <div class="xe-background">
+                                <i class="fa-life-ring"></i>
+                            </div>
+                            <div class="xe-upper">
+                                <div class="xe-icon">
+                                    <i class="fa-windows"></i>
+                                </div>
+                                <div class="xe-label">
+                                    <strong class="num">Windows 10</strong>
+                                    
+                                </div>
+                            </div>
+                            <div class="xe-lower">
+                                <div class="border"></div>
+                                <span>64位操作系统</span>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    </a>
+                   
+                </div>
+                <div class="row" style="background-color:#fff;margin-top:30px;">
+                    
+                    <div class="col-xs-4">
+                        <div class="xe-widget xe-counter xe-counter-danger" >
+                            <div class="xe-icon">
+                                <i class="fa-ra"></i>
+                            </div>
+                            <div class="xe-label">
+                                <strong class="num">Special</strong>
+                                <span>特种实验室</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+              <div id="spsys"></div> 
+                <footer class="main-footer sticky footer-type-1">
+                    <div class="footer-inner">
+                      
+                        <div class="footer-text">
+                           
+                            <strong>SSD&AI Development Team</strong>&nbsp&nbsp@&nbspcopyright&nbsp&nbsp&nbsp 2016
+                        </div>
+                       
+                    </div>
+                </footer>
+            </div>
+        </div>
+        <script type="text/javascript">
+        	function OpenMessage(){
+        		window.open('/message','_self');
+        	}
+        window.onload=getspsys;
+                function getspsys(){
+                    $.get("/spsys",
+         function (data) {
+           // var sss=data;
+            document.getElementById("spsys").innerHTML=data;
+        });
+                }
+
+        </script>
+       <% include footer %> 
+ <% }else{%>
+ <script type="text/javascript">
+ 	window.open("/login",'_self');
+ </script>
+ 
+ <%}%>
+ 
+    

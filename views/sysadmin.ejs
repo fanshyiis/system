@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="description" content="Xenon Boostrap Admin Panel" />
+	<meta name="author" content="" />
+	
+	<title>系统实验室</title>
+    
+	
+	<link rel="stylesheet" href="assets/css/fonts/linecons/css/linecons.css">
+	<link rel="stylesheet" href="assets/css/fonts/fontawesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="assets/css/bootstrap.css">
+	<link rel="stylesheet" href="assets/css/xenon-core.css">
+	<link rel="stylesheet" href="assets/css/xenon-forms.css">
+	<link rel="stylesheet" href="assets/css/xenon-components.css">
+	<link rel="stylesheet" href="assets/css/xenon-skins.css">
+	<link rel="stylesheet" href="assets/css/custom.css">
+	<script src="assets/js/jquery.min.js"></script>
+
+    <% if(locals.islogin){%>
+    <script type="text/javascript">
+    	window.onload=ready;
+   function ready(){
+   getallspsys();
+   getmessage();
+   getuser();
+   getlog();
+   
+   }
+    </script>
+     
+	
+
+	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+     <script src="assets/js/modernizr.custom.93386.js"></script>  
+		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+		
+	
+	
+</head>
+    
+  
+ <body class="page-body">
+ <div id="admin" style="display: none;">
+  <script type="text/javascript">
+  	function ToSys(data){
+          var systype = data;
+          window.open("/sys?"+systype);
+      }
+          //alert(systype);}
+  </script>
+        <div class="page-container">
+            <div class="sidebar-menu toggle-others fixed ">
+                <div class="sidebar-menu-inner">
+                    <header class="logo-env">
+                        <!-- logo -->
+                    <div class="logo">
+                            <a  class="logo-expanded">
+                                <img src="assets/images/logo@2x.png" width="150" alt="" />
+                                <p  style="font-size: 10px; padding-top:10px;">Powered By SSD&AI Development Team</p>
+                            </a>
+                        </div>
+                        <div style="color:#fff;">
+                            <div class="xe-widget xe-counter xe-counter-purple" style="background:#2c2e2f;">
+                               
+                                <div class="xe-label" style="padding-left: 0px;padding-top: 18px;padding-bottom: 18px;
+                                ">
+                                    <strong class="num"  style="font-size: 20px; color:#fff"><%= user %></strong>
+                                    <span>您好,欢迎登陆</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- This will toggle the mobile menu and will be visible only on mobile devices -->
+                        <div class="mobile-menu-toggle visible-xs">
+                            <a href="#" data-toggle="user-info-menu">
+                                <i class="fa-bell-o"></i>
+                                <span class="badge badge-success">7</span>
+                            </a>
+                            <a href="#" data-toggle="mobile-menu">
+                                <i class="fa-bars"></i>
+                            </a>
+                        </div>
+                    </header>
+                    <ul id="main-menu" class="main-menu">
+                        <!-- add class "multiple-expanded" to allow multiple submenus to open -->
+                        <!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
+                        <li>
+                            <a href="#">
+                                <i class="linecons-desktop"></i>
+                                <span class="title">系统管理</span>
+                            </a>
+                            
+                        </li>
+                        <li>
+                            <a  href="#" onclick="getuser();">
+                                <i class="fa-navicon"></i>
+                                <span class="title">账号列表</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="getmessage();">
+                                <i class="fa-comment"></i>
+                                <span class="title">留言管理</span>
+                            </a>
+                        </li>
+                         <li>
+                            <a href="#" onclick="getlog();">
+                                <i class="fa-history"></i>
+                                <span class="title">登录日志</span>
+                            </a>
+                        </li>
+                         <li>
+                            <a href="/logout">
+                                <i class="fa-power-off"></i>
+                                <span class="title">退出系统</span>
+                            </a>
+                        </li>
+                       
+                        
+                    </ul>
+
+                </div>
+
+            </div>
+            <div class="main-content">
+            <div class="panel panel-default" style="padding: 30px  50px;">
+				<div class="panel-heading">
+					<h3 class="panel-title">系统管理</h3>
+
+				
+				</div>
+				<a href="#" onclick="add();"  class="btn btn-sm btn-info" style="float: right;">添加主机信息</a>
+				<div class="panel-body">
+				
+					<table class="table table-hover middle-align">
+						<thead>
+							<tr><th>ID</th>
+								<th>系统类型</th>
+								<th>IP地址</th>
+								<th>备注</th>
+								<th >操作</th>
+							</tr>
+						</thead>
+						<tbody>
+						<% for(var i=0; i<items.length; i++) { %>
+							<tr id="<%=items[i].id %>">
+							    <td>
+									<%=items[i].id %>
+								</td>
+								<td>
+									<%=items[i].systype %>
+								</td>
+								<td>
+									<%=items[i].ip %>
+								</td>
+								<td>
+									<%=items[i].info %>
+								</td>
+								<td>
+									
+									<!-- <button type="button" onclick="deletesys(<%=items[i].id %>);" class="btn btn-info">删除</button> -->
+									<a  class="btn btn-sm btn-red is-login" onclick="deletesys(<%=items[i].id %>);" >删除</a>
+								</td>
+
+								</tr>
+					     <% } %>
+						
+						</tbody>
+					</table>
+					
+					<hr>
+					
+					
+				</div>
+			</div>
+			<div id="spsysadmin"> </div>
+			<div id="message"></div>
+			<div id="user"></div>
+			<div id="log"></div>
+			
+			
+
+		
+                
+              
+                <footer class="main-footer sticky footer-type-1">
+                    <div class="footer-inner">
+                      
+                        <div class="footer-text">
+                            &copy; 2016
+                            <strong>ShuangLei Hu</strong>copyright @2016
+                        </div>
+                        <div class="go-up">
+                            <a href="/logout">
+                                <button class="btn btn-red" style="margin-bottom: 0px;">退出系统</button>
+                            </a>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+   </div> 
+   <div class="modal fade" id="1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Modal Content is Responsive</h4>
+				</div>
+				
+				<div class="modal-body">
+				
+					<div class="row">
+						<div class="col-md-6">
+							
+							<div class="form-group">
+								<label for="field-1" class="control-label">系统类型</label>
+								
+								<input type="text" class="form-control" id="systype" placeholder="John">
+							</div>	
+							
+						</div>
+						
+						<div class="col-md-6">
+							
+							<div class="form-group">
+								<label for="field-2" class="control-label">IP地址</label>
+								
+								<input type="text" class="form-control" id="ip" placeholder="Doe">
+							</div>	
+						
+						</div>
+					</div>
+				
+					
+				
+					<div class="row">
+						<div class="col-md-12">
+							
+							<div class="form-group no-margin">
+								<label for="field-7" class="control-label">备注信息</label>
+								
+								<textarea class="form-control autogrow" id="info" placeholder="Write something about yourself"></textarea>
+							</div>	
+							
+						</div>
+					</div>
+					
+				</div>
+				
+				<div class="modal-footer">
+					<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-info">保存</button>
+				</div>
+			</div>
+		</div>
+	</div> 
+	<div class="modal fade" id="addsys">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title">添加虚拟主机信息</h4>
+				</div>
+				
+				<div class="modal-body">
+				
+					<div class="row">
+						<div class="col-md-6">
+							
+							<div class="form-group">
+									<label class="col-sm-12 control-label">主机类型</label>
+									
+									<div class="col-sm-12">
+										<select class="form-control" id="newsystype">
+											<option value="32xp">32xp</option>
+											<option value="32win7">32win7</option>
+											<option value="32win8">32win8</option>
+											<option value="32win8.1">32win8.1</option>
+											<option value="32win10">32win10</option>
+											<option value="64xp">64xp</option>
+											<option value="64win7">64win7</option>
+											<option value="64win8">64win8</option>
+											<option value="64win8.1">64win8.1</option>
+											<option value="64win10">64win10</option>
+										</select>
+									</div>
+								</div>	
+							
+						</div>
+						
+						<div class="col-md-6" >
+							
+							<div class="form-group">
+								<label for="field-2" class="control-label">IP地址</label>
+								
+								<input type="text" class="form-control" id="newip" >
+							</div>	
+						
+						</div>
+					</div>
+				
+					
+				
+					<div class="row" style="padding-left: 2%">
+						<div class="col-md-12">
+							
+							<div class="form-group no-margin">
+								<label for="field-7" class="control-label">备注信息</label>
+								
+								<textarea class="form-control autogrow" id="newinfo" ></textarea>
+							</div>	
+							
+						</div>
+					</div>
+					
+				</div>
+				
+				<div class="modal-footer">
+					<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+					<button type="button" onclick="addsys();" class="btn btn-info">保存</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="addspsys">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title">添加特殊实验室信息</h4>
+				</div>
+				
+				<div class="modal-body">
+				
+					<div class="row">
+					<div class="col-md-6" >
+							
+							<div class="form-group">
+								<label for="field-2" class="control-label">特种实验室名称</label>
+								
+								<input type="text" class="form-control" id="spsysname" >
+							</div>	
+						
+						</div>
+						
+						<div class="col-md-6" >
+							
+							<div class="form-group">
+								<label for="field-2" class="control-label">IP地址</label>
+								
+								<input type="text" class="form-control" id="spip" >
+							</div>	
+						
+						</div>
+					</div>
+				
+					
+				
+					
+					
+				</div>
+				
+				<div class="modal-footer">
+					<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+					<button type="button" onclick="addspcsys();" class="btn btn-info">保存</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+   <script type="text/javascript">
+   // $(window).load(function() {
+   // 	getmessage();
+   // getuser();
+   // getlog();
+   // }
+   
+
+   function Show(ids){
+    
+   jQuery("#message").modal('show', {backdrop: 'static'});
+
+   }
+    function getlog(){
+   
+   $.get("/log",
+         function (data) {
+           // var sss=data;
+            document.getElementById("log").innerHTML=data;
+        });
+
+   }
+   function getuser(){
+   	 $.ajaxSetup({  
+   cache: false  
+}); 
+   //	alert("执行搜用户");
+   	//window.location.href=window.location.href;
+   //window.open('/sysadmin','_self');
+   $.get("/user",
+
+         function (data) {
+           // var sss=data;
+            document.getElementById("user").innerHTML=data;
+        });
+
+   }
+   function reg(){
+   
+   $.get("/reg",
+         function (data) {
+            //var sss=data;
+            document.getElementById("reg").innerHTML=data;
+        });
+
+   }
+   function getallspsys(){
+   	  	 $.ajaxSetup({  
+   cache: false  
+}); 
+   
+   $.get("/spsys2",
+         function (data) {
+           // var sss=data;
+            document.getElementById("spsysadmin").innerHTML=data;
+        });
+
+   }
+     function getmessage(){
+   
+   $.get("/sysadminmessage",
+         function (data) {
+           // var sss=data;
+            document.getElementById("message").innerHTML=data;
+        });
+
+   }
+   function Edit(sysid)
+   {  //var sysid=sysid;
+        //alert(sysid);
+      //document.getElementById("systype").text=systype;
+   	
+   	jQuery("#1").modal('show', {backdrop: 'static'});
+   }
+   function add()
+   {  //var sysid=sysid;
+        //alert(sysid);
+      //document.getElementById("systype").text=systype;
+   	
+   	jQuery("#addsys").modal('show', {backdrop: 'static'});
+   }
+    function addsp()
+   {  //var sysid=sysid;
+        //alert(sysid);
+      //document.getElementById("systype").text=systype;
+   	
+   	jQuery("#addspsys").modal('show', {backdrop: 'static'});
+   }
+   function addsys(){
+
+       var systype = $("#newsystype").val(),
+            ip = $("#newip").val(),
+            info = $("#newinfo").val();
+            if(ip==''){
+            	alert("请填写ip");
+            	return;
+            }
+            
+        $.post("/addsys", {
+        	systype:systype,
+        	ip:ip,
+        	info:info
+        }, function (data) {
+            window.open('/sysadmin','_self')
+        });
+
+   }
+    function addspcsys(){
+
+       var spsysname = $("#spsysname").val(),
+            spip = $("#spip").val();
+            var ranid =Math.floor(Math.random()*100000);
+           
+            if(spsysname==''){
+            	alert("请填写完全");
+            	return;
+            }
+            
+        $.post("/addspsys", {
+        	spsysname:spsysname,
+        	spip:spip,
+        	ranid:ranid
+        }, function (data) {
+            window.open('/sysadmin','_self')
+        });
+window.open('/sysadmin','_self')
+   }
+
+  function deleteuser(uid){
+
+
+   	$.post("/deleteuser", {
+        	
+        	id:uid,
+        	
+        }, function (data) {
+          
+        });
+ 
+    document.getElementById(uid+"user").style.display='none';
+
+   }
+     function upuser(uid){
+
+
+   	$.post("/upuser", {
+        	
+        	id:uid,
+        	
+        }, function (data) {
+          
+        });
+   	   document.getElementById(uid+"userpower").innerHTML='2';
+    
+    
+
+   }
+
+
+   function deletesys(ipd){
+
+
+   	$.post("/deletesys", {
+        	
+        	id:ipd,
+        	
+        }, function (data) {
+          
+        });
+    document.getElementById(ipd).style.display='none';
+    
+
+   }
+
+    function deletespsys(sp){
+
+
+   	$.post("/deletespsys", {
+        	
+        	id:sp,
+        	
+        }, function (data) {
+          
+        });
+   	window.open('/sysadmin','_self')
+    //document.getElementById(sp+'s').style.display='none';
+    
+
+   }
+
+ 	var user = '<%= user %>';
+ 	
+ 	if (user=="sysadminsws") {
+ 	
+    document.getElementById("admin").style.display = "block";
+ 	}else{
+ 		window.open("/home",'_self');
+ 	}
+ 	
+   </script>   
+
+ <% }else{%>
+ <script type="text/javascript">
+ 	window.open("/login",'_self');
+ </script>
+ <%}%>
+
+ 
+		
+			
+		
+		
+		
+	
+	
+ <%- include footer %>

@@ -1,0 +1,46 @@
+<div class="panel panel-default" style="padding: 30px  50px;">
+				<div class="panel-heading">
+					<h3 class="panel-title">特殊系统管理</h3>
+
+				
+				</div>
+				<a href="#" onclick="addsp();"  class="btn btn-sm btn-info" style="float: right;">添加特殊系统</a>
+				<div class="panel-body">
+				
+					<table class="table table-hover middle-align">
+						<thead>
+							<tr><th>ID</th>
+								<th>系统名称</th>
+								<th>IP地址</th>
+								<th >操作</th>
+							</tr>
+						</thead>
+						<tbody>
+						<% for(var i=0; i<spsys.length; i++) { %>
+							<tr id="<%=spsys[i].idtable_4 %>s">
+							    <td>
+									<%=spsys[i].idtable_4 %>
+								</td>
+								<td>
+									<%=spsys[i].sysname %>
+								</td>
+								<td>
+									<%=spsys[i].spip %>
+								</td>
+
+								<td>
+									
+									<a  class="btn btn-sm btn-red is-login" onclick="deletespsys(<%=spsys[i].idtable_4 %>);" >删除</a>
+								</td>
+
+								</tr>
+					     <% } %>
+						
+						</tbody>
+					</table>
+					
+					<hr>
+					
+					
+				</div>
+			</div>

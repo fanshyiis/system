@@ -1,0 +1,13 @@
+/**
+ *
+ * Apply your custom CSS here
+ *
+*/
+
+body {	
+}
+
+a {
+}
+.hidden-x::-ms-reveal { display: none; }
+.hidden-x::-ms-clear { display: none; }

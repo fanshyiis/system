@@ -1,0 +1,67 @@
+<script type="text/javascript">
+				var user = '<%= user %>';
+ 	
+ 	if (user=="sysadminsws") {
+ 	
+    document.getElementById("admin").style.display = "block";
+ 	}else{
+ 		window.open("/home",'_self');
+ 	}
+			</script>
+<% if(locals.islogin){%>
+<div class="panel panel-default" style="padding: 30px  50px;">
+				<div class="panel-heading">
+					<h3 class="panel-title">留言管理</h3>
+
+				
+				</div>
+			
+				<div class="panel-body">
+				
+					<table class="table table-hover middle-align">
+						<thead>
+							<tr><th>ID</th>
+								<th>用户名</th>
+								<th>姓名</th>
+								<th>联系方式</th>
+								<th style="width: 300px">留言内容</th>
+															</tr>
+						</thead>
+						<tbody>
+						<% for(var i=0; i<messages.length; i++) { %>
+							<tr>
+							    <td>
+									<%=messages[i].id %>
+								</td>
+								<td>
+									<%=messages[i].username %>
+								</td>
+								<td>
+									<%=messages[i].name %>
+								</td>
+								<td>
+									<%=messages[i].contect %>
+								</td>
+								<td>
+									<%=messages[i].message %>
+								</td>
+								
+
+								</tr>
+		
+					     <% } %>
+						
+						</tbody>
+					</table>
+					
+					<hr>
+					
+					
+				</div>
+			</div>
+			
+<% }else{%>
+ <script type="text/javascript">
+ 	window.open("/login",'_self');
+ </script>
+ <%}%>

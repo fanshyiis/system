@@ -1,0 +1,133 @@
+ <%- include header %>
+  <body class="page-body login-page">
+   <div class="background" style="overflow: hidden;
+        z-index: -111;
+        outline: none;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0px;">
+        <video src="assets/images/video.mp4" autoplay="autoplay" loop width="100%" heigth="100%">
+        </video>
+    </div>
+  
+ <div class="login-container" >
+ <div class="row" style="z-index:999 ">
+		
+							<img src="assets/images/1111.png"  alt="" width="120" />
+							
+						
+						
+	</div>
+	
+		<div class="row">
+		
+		<div class="col-sm-5" style="padding-top: 170px; padding-left: 10%;">
+		<img src="assets/images/wlogo.png" alt="" width="280" />
+			
+		</div>
+			<div class="col-sm-5" id="login-con" style="float: right;padding-top: 100px; padding-right: 40px; margin-right: 5%;">
+			
+			
+				
+				<!-- Errors container -->
+				<div class="errors-container">
+				
+						<script type="text/javascript">
+					$(document).ready(function($)
+					{
+						// Reveal Login form
+						setTimeout(function(){ $(".fade-in-effect").addClass('in'); }, 1);
+						 
+                         $("#login").ajaxForm(function(data){ 
+                           if (data=='11') {
+                           	alert("请输入帐号或密码");
+                           } 
+                           else if(data=='1'){
+                            	alert("账号或密码错误");
+                            }else if (data=='2') {
+                            	window.open('/sysadmin','_self');
+                            }else{
+                            	window.open('/home','_self');
+                            }
+                         	//
+                            //alert(data);  
+             //Alert("post success.");  
+                               });  
+
+						$("form#login .form-group:has(.form-control):fifth .form-control").focus();});
+				</script>				
+				</div>
+				
+				<!-- Add class "fade-in-effect" for login form effect -->
+				<form method="post" role="form" id="login" class="login-form fade-in-effect">
+				   <fieldset>
+              <% if(locals.islogin) { %>
+                  <div style="color:#fff;">
+                            <div class="xe-widget xe-counter xe-counter-purple" style="background:#000000">
+                                <div class="xe-icon">
+                                    <i class="linecons-user" style="background-color: #AD2222;"></i>
+                                </div>
+                                <div class="xe-label">
+                                    <strong class="num" style="color:#fff"><%= test %></strong>
+                                    <span>用户已经登陆</span>
+                                </div>
+                            </div>
+                        </div>
+             
+             <a class="btn btn-red" href="/logout" style="margin-left: 30px">退出系统</a>
+             <a class="btn btn-blue" href="/home">进入主页</a>
+              <% } else{ %>
+           
+          
+					
+					<div class="login-header">
+						<div class="logo">
+							<img src="assets/images/logo@2x.png" alt="" width="300" />
+							
+						</div> 
+						
+						<h4>Powered By SSD&AI Development Team</h4>
+					</div>
+	
+					
+					<div class="form-group" style="padding-top: 20px">
+					
+						<label class="control-label" for="username" style="padding-top: 20px;">账号</label>
+						
+						<input type="text" class="form-control input-dark hidden-x" name="username" id="username"  style="text-align: center;border-radius:31px;border-top-left-radius:31px;border-top-right-radius:31px;border-bottom-left-radius:31px;border-bottom-right-radius:31px;border-color: #AD2222; " />
+					</div>
+					
+					<div class="form-group">
+					
+						 <label class="control-label" for="password">密码</label> 
+
+						<input type="password" class="form-control input-dark hidden-x" name="password" id="password"  style="text-align: center; border-radius:31px;border-top-left-radius:31px;border-top-right-radius:31px;border-bottom-left-radius:31px;border-bottom-right-radius:31px;border-color: #AD2222;" />
+					</div>
+
+					
+					<div class="form-group">
+						<button type="submit" style="text-align: center; border-radius:31px;border-top-left-radius:31px;border-top-right-radius:31px;border-bottom-left-radius:31px;border-bottom-right-radius:31px;border-color: #AD2222;" class="btn btn-dark  btn-block text-left">
+							<i class="fa-lock"></i>
+							登陆
+						</button>
+					</div>
+					
+				
+					   <% } %>
+                  </fieldset>
+				</form>
+				
+				
+				
+			</div>
+			
+		</div>
+		
+	</div>
+	<script type="text/javascript">
+		
+	</script>
+
+ <%- include footer %>

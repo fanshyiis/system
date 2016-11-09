@@ -1,0 +1,430 @@
+ <%- include headersys %>
+
+    <% if(locals.islogin){%>
+<body class="page-body" onbeforeunload="return myFunction()">
+
+<div id="ip" style="display: none;">
+    
+</div>
+ <script type="text/javascript">  
+  //if ("条件") {   
+         //   if (window.opener.SetRDPID) { //调用打开此页的父页面中的方法  
+        //        window.opener.SetRDPID("123");  
+        //    };  
+// 连接远程桌面的方法
+        // function Message(){
+        //  var name = document.getElementById("name").value;
+        //  var contect = document.getElementById("contect").value;
+        //  var message = document.getElementById("message").value;
+        //  username = '<%= user %>';
+        
+        //     var messagedata={
+        //      'name':name,
+        //      'contect':contect,
+        //      'message':message,
+        //      'username':username,
+        //      }
+  
+        //       $.ajax({
+        //      url: '/message',
+        //      type: 'post',
+        //      dataType: 'json',
+        //      async : false,
+        //      data:messagedata,
+        //       success:function(data){
+        //         alert("ss");
+        //   //    var sysip =data.ip;
+        //   // //ralert(sysip);
+        //   // //return sysip;
+        //   //   document.getElementById("ip").innerHTML=sysip;
+        //                 },
+        //      error:function(data){
+        //     alert('error');
+        //      }
+             
+        //     });
+
+        //   }
+
+       
+        
+           
+           
+            function RdpConnect() { 
+             var url = location.search;
+            if(url.indexOf("?")!=-1) 
+            { 
+               var systype = url.substr(1);
+                               if (systype=='32xp') {
+                document.getElementById('systy').innerHTML+="32位xp操作系统"
+               }else if (systype=='32win7') {
+                document.getElementById('systy').innerHTML+="32位win7操作系统"
+               }else if (systype=='32win8') {
+                document.getElementById('systy').innerHTML+="32位win8操作系统"
+               }else if (systype=='32win8.1') {
+                document.getElementById('systy').innerHTML+="32位win8.1操作系统"
+               }else if (systype=='32win10') {
+                document.getElementById('systy').innerHTML+="32位win10操作系统"
+               }else if (systype=='64xp') {
+                document.getElementById('systy').innerHTML+="64位xp操作系统"
+               }else if (systype=='64win7') {
+                document.getElementById('systy').innerHTML+="64位win7操作系统"
+               }else if (systype=='64win8') {
+                document.getElementById('systy').innerHTML+="64位win8操作系统"
+               }else if (systype=='64win8.1') {
+               document.getElementById('systy').innerHTML+="64位win8.1操作系统" 
+               }else if (systype=='64win10') {
+                document.getElementById('systy').innerHTML+="64位win10操作系统"
+               }
+            
+                }
+
+            
+
+           $.ajax({
+             url: '/sys',
+             type: 'post',
+             dataType: 'json',
+             async : false,
+             data:{sys:systype},
+              success:function(data){
+                var length = data.length;
+                var randip = Math.floor(Math.random()*length);
+                
+
+                var sysip =data[randip].ip;
+             //alert(sysip);
+          //ralert(sysip);
+          //return sysip;
+            document.getElementById("ip").innerHTML=sysip;
+                        },
+             error:function(data){
+            alert('发生错误：返回主页');
+            window.open('/home','_self');
+             }
+             
+            });
+           var sysip=document.getElementById("ip").innerHTML; 
+                var userName, Pwd, server, domain, port;  
+                userName = '<%= user %>'; //用户名  
+                server = sysip; //IP  
+                port = 3389; //端口 
+                Pwd = "liuzhen";
+                domain = "sws.com";  //域  
+                if (!MsRdpClient.Connected) {  
+                    try {  
+                        document.getElementById("connectArea").style.display = "block";
+                        document.getElementById("btn-link").style.display = "none"; //显示远程桌面div  
+                        MsRdpClient.Server = server; //设置远程桌面IP地址  
+                        try {  
+                            MsRdpClient.AdvancedSettings2.RedirectDrives = false;  
+                            MsRdpClient.AdvancedSettings2.RedirectPrinters = false;  
+                            MsRdpClient.AdvancedSettings2.RedirectPrinters = false;  
+                            MsRdpClient.AdvancedSettings2.RedirectClipboard = true;  
+                            MsRdpClient.AdvancedSettings2.RedirectSmartCards = false;  
+                        } catch (ex) {  
+                        };  
+  
+  
+                        MsRdpClient.Domain = domain;//域  
+                        MsRdpClient.UserName = userName;  
+                        MsRdpClient.AdvancedSettings2.ClearTextpassword = Pwd; //密码  
+                        MsRdpClient.AdvancedSettings2.RDPPort = port; //端口  
+                        MsRdpClient.ColorDepth = 32;   
+                        MsRdpClient.FullScreen = 0;  //是否全屏 0否 1是  
+                        MsRdpClient.Width = 1024; //设置远程桌面 显示区域的宽和高  
+                        MsRdpClient.Height = 768;  
+                        MsRdpClient.DesktopWidth = 1024;  //设置 远程桌面的宽和高  
+                        MsRdpClient.DesktopHeight = 768;   
+                        try {  
+                            //如果不支持，继续下面操作  
+                            MsRdpClient.AdvancedSettings7.EnableCredSspSupport = true;  
+                            MsRdpClient.AdvancedSettings5.AuthenticationLevel = 2;  
+                        } catch (ex) {  
+                        } finally {                  
+                            MsRdpClient.Connect();  //连接远程桌面  
+                        }  
+                    } catch (ex) {  
+                        alert("发生错误：" + ex.message + "请尝试刷新页面重新连接。");  
+                    };  
+                } else {  
+                    alert("已连接！");  
+                };  
+            };  
+            //var logoff = false; //存储是否正常注销  
+            //全屏  
+            function FullScreen() {  
+                if (MsRdpClient.Connected) {  
+                    MsRdpClient.FullScreen = 1;  
+                };  
+            };  
+             
+  
+//关闭当前页面  
+        function closeWindow() {  
+            window.opener = null;  
+            window.open("", "_self");  
+            window.close();  
+        };  
+</script>  
+
+    <div class="settings-pane">
+            
+        <a  data-toggle="settings-pane" data-animate="true">
+            &times;
+        </a>
+        
+        
+        
+    </div>
+    
+    <div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
+            
+        <!-- Add "fixed" class to make the sidebar fixed always to the browser viewport. -->
+        <!-- Adding class "toggle-others" will keep only one menu item open at a time. -->
+        <!-- Adding class "collapsed" collapse sidebar root elements and show only icons. -->
+        
+        
+        <div class="main-content">
+        <div class="sidebar-menu toggle-others fixed " style="width: 240px;">
+                <div class="sidebar-menu-inner" style="background:#2c2e2f;">
+                    <header class="logo-env">
+                        <!-- logo -->
+                        <div class="logo">
+                            <a  class="logo-expanded">
+                                <img src="assets/images/logo@2x.png" width="150" alt="" />
+                                <p  style="font-size: 10px; padding-top:10px;">Powered By SSD&AI Development Team</p>
+                            </a>
+                        </div>
+                        <div style="color:#fff;">
+                            <div class="xe-widget xe-counter xe-counter-purple" style="background:#2c2e2f;">
+                               
+                                <div class="xe-label" style="padding-left: 0px;padding-top: 18px;padding-bottom: 18px;
+                                ">
+                                    <strong class="num"  style="font-size: 20px; color:#fff"><%= user %></strong>
+                                    <span>您好,欢迎登陆</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- This will toggle the mobile menu and will be visible only on mobile devices -->
+                        <div class="mobile-menu-toggle visible-xs">
+                            <a href="#" data-toggle="user-info-menu">
+                                <i class="fa-bell-o"></i>
+                                <span class="badge badge-success">7</span>
+                            </a>
+                            <a href="#" data-toggle="mobile-menu">
+                                <i class="fa-bars"></i>
+                            </a>
+                        </div>
+                    </header>
+                    <ul id="main-menu" class="main-menu">
+                        <!-- add class "multiple-expanded" to allow multiple submenus to open -->
+                        <!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
+                         <li>
+                          <a href="#" data-toggle="dropdown">
+                           
+                            <span id="systy">
+                                
+                                <i  class="fa-info-circle" style="padding-right: 10px;"></i>
+                            </span>
+                       
+                        </a>  
+                        </li>
+                           <li>
+                             <a href="javascript:void(0)" onclick="FullScreen()" >
+                           
+                            <span>
+                                
+                                <i class="fa-external-link" style="padding-right: 10px;"></i>全屏
+                            </span>
+                        </a>
+                        </li>
+                         <li>
+                             <a href="/home"  >
+                           
+                            <span>
+                                
+                                <i class="fa-mail-reply" style="padding-right: 10px;"></i>返回主页
+                            </span>
+                        </a>
+                        </li>
+                     <li style="margin-top: 90px;">
+                            <a href="javascript:void(0);" onclick="OpenMessage();">
+                                <i class="linecons-mail"></i>
+                                <span class="title">留言反馈</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/logout">
+                                <i class="linecons-paper-plane"></i>
+                                <span class="title">退出系统</span>
+                            </a>
+                        </li>
+                       
+                        
+                    </ul>
+                </div>
+            </div>
+                   
+         <!--  <nav class="navbar user-info-navbar" role="navigation" style="height:50px">
+                
+       
+                <ul class="user-info-menu  left-links list-inline list-unstyled">
+
+                 <li class="dropdown user-profile" style="min-height: 76px;">
+                        <a href="/logout"  >
+                           
+                            <span>
+                                
+                                <i class="fa-power-off" style="padding-right: 10px;"></i>退出系统
+                            </span>
+                        </a>
+                        
+                       
+                    </li>
+                    
+                    
+                </ul>
+                <ul class="user-info-menu  left-links list-inline list-unstyled">
+
+                 <li class="dropdown user-profile" style="min-height: 76px;">
+                        <a href="javascript:void(0)" onclick="FullScreen()" >
+                           
+                            <span>
+                                
+                                <i class="fa-external-link" style="padding-right: 10px;"></i>全屏
+                            </span>
+                        </a>
+                        
+                       
+                    </li>
+                    
+                    
+                </ul>
+                 <ul class="user-info-menu  left-links list-inline list-unstyled">
+
+                 <li class="dropdown user-profile" style="min-height: 76px;">
+                        <a href="/home"  >
+                           
+                            <span>
+                                
+                                <i class="fa-mail-reply" style="padding-right: 10px;"></i>返回主页
+                            </span>
+                        </a>
+                        
+                       
+                    </li>
+                    
+                    
+                </ul>
+
+
+                <ul class="user-info-menu  left-links list-inline list-unstyled">
+
+                 <li class="dropdown user-profile" style="min-height: 76px;">
+                        <a href="#" data-toggle="dropdown">
+                            <img src="assets/images/user-4.png" alt="user-image" class="img-circle img-inline userpic-32" width="18">
+                            <span>
+                                <%= user %>
+                                
+                            </span>
+                        </a>
+                        
+                       
+                    </li>
+                    
+                </ul>
+                <ul class="user-info-menu  left-links list-inline list-unstyled">
+
+                 <li class="dropdown user-profile" style="min-height: 76px;">
+                        <a href="#" data-toggle="dropdown">
+                           
+                            <span id="systy">
+                                
+                                <i  class="fa-info-circle" style="padding-right: 10px;"></i>
+                            </span>
+                       
+                        </a>
+                       
+                    </li>
+                    
+                    
+                </ul>
+
+                
+                
+            
+                
+            </nav>   -->
+            <div class="row" style="margin-top: -25px;" >
+
+            <div id="btn-link" style="margin-left: 45%;margin-top:20%">
+                <button class="btn btn-primary btn-icon" onclick="RdpConnect();">
+                                    <i class="fa-link"></i>
+                                    <span>连接虚拟机</span>
+                                </button>
+            </div>
+
+            
+        
+                   <div id="connectArea"  style="display: none" >  
+        <table style="margin: auto; margin-left: 290px; " >  
+            <tr>  
+                <td>  
+                    <object id="MsRdpClient"  
+                        classid="CLSID:7584c670-2274-4efb-b00b-d6aaba6d3850"  
+                        codebase="msrdp.cab#version=5,2,3790,0" width="1024px" height="768px">  
+                    </object>  
+                </td>  
+            </tr>  
+         <!--    <script type="text/javascript">  
+                function MsRdpClient::OnDisconnected(disconnectCode) {  
+                    document.getElementById("connectArea").style.display = "none";  
+                    //正常注销，代码为2  
+                    //if (disconnectCode != 2) {  
+                    //    if (logoff == false) {  
+                    //        alert("计算机处于断开状态，请根据提示完成后续步骤：\r\n(1)如果您操作已完成，请刷新页面重新连接并注销；\r\n(2)如果仍需操作，请刷新页面后继续，完毕后请注销。\r\n谢谢您的配合！");  
+                    //    } else {  
+                    //        alert("计算机已注销，如需使用，请刷新此页面。");  
+                    //    }  
+                    //} else {  
+                    //    logoff = true; //记录注销状态  
+                    //    //关闭当前页面  
+                    //};  
+                    closeWindow();  
+                }  
+            </script> -->  
+        </table>  
+    </div>
+                
+            </div>
+     
+            
+            
+     
+        </div>
+ 
+     
+        
+            
+      
+        
+        
+        
+    </div>
+    
+                               <script type="text/javascript">
+
+                               function OpenMessage(){
+                window.open('/message');
+            }
+                                    window.onload = RdpConnect();
+                                </script>
+    </body>
+ <% }else{%>
+ <script type="text/javascript">
+    window.open("/login",'_self');
+ </script>
+ <%}%>
+
+ <%- include footer %>

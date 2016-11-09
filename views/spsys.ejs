@@ -1,0 +1,39 @@
+ 
+ <% if(locals.islogin){%>  
+              <div class="row" style="background-color:#fff;"> 
+              <% for(var i=0; i<spsys.length; i++) { %>  
+                   
+                    
+                    <a href="javascript:void(0);" onclick="SpSys(<%=spsys[i].ranid %>);">
+                    <div class="col-xs-3" >
+                        <div class="xe-widget xe-progress-counter xe-counter-block-blue" >
+                         <div class="xe-background">
+                                <i class="linecons-user"></i>
+                            </div>
+                            <div class="xe-upper">
+                                <div class="xe-icon">
+                                    <i class="fa-windows"></i>
+                                </div>
+                                <div class="xe-label">
+                                    <strong class="num"><%=spsys[i].sysname %></strong>
+                                   
+                                </div>
+                            </div>
+                            <div class="xe-lower">
+                                <div class="border"></div>
+                                <span>特种实验室</span>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    </a>
+  <% } %>
+                   
+                </div>
+
+
+                <% }else{%>
+ <script type="text/javascript">
+    window.open("/login",'_self');
+ </script>
+ <%}%>
